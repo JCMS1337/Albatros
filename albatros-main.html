@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Страховая Компания Альбатрос</title>
+    <link rel="stylesheet" href="albatros-main.css" />
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <div class="left-part">
+                <a href="albatros-main.html"><img src="images/logo.png" alt="Логотип Альбатрос" class="logo" /></a>
+                <nav>
+                    <ul>
+                        <li><a href="albatros-about.html">О Компании</a></li>
+                        <li><a href="albatros-tariffs.html">Тарифы</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="center-part">
+                <h1>АЛЬБТАРОС</h1>
+            </div>
+            <div class="right-part">
+                <button id="auth-button" class="auth-button">Вход / Регистрация</button>
+                <div id="admin-link" style="display:none;"><a href="adminpanel.html">Админпанель</a></div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="about" class="about">
+            <div class="container">
+                <h2>О Компании</h2>
+                <div class="about-content">
+                    <div class="text">
+                        <p>Страховая компания "Альбатрос" предоставляет надежные услуги страхования уже более 10 лет. Мы заботимся о вашем спокойствии и защите от непредвиденных ситуаций.</p>
+                        <p>Наша команда профессионалов готова помочь вам выбрать оптимальный страховой продукт, соответствующий вашим потребностям.</p>
+                    </div>
+                    <div class="photo">
+                        <img src="placeholder.jpg" alt="Офис компании Альбатрос" width="400" height="300" />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tariffs" class="tariffs">
+            <div class="container">
+                <h2>Наши Тарифы</h2>
+                <div class="tariff-cards" id="tariff-cards">
+                    <!-- Тарифы из Firebase будут загружены сюда -->
+                </div>
+            </div>
+        </section>
+
+        <section id="about-more" class="about-more">
+            <div class="container">
+                <h2>Подробнее о компании</h2>
+                <p>Компания "Альбатрос" успешно работает на рынке страхования с 2010 года, предоставляя качественные услуги и индивидуальный подход к каждому клиенту. Мы постоянно развиваемся и расширяем спектр наших услуг, чтобы соответствовать современным требованиям и ожиданиям.</p>
+                <p>Наши клиенты ценят нас за надежность, профессионализм и оперативность в решении любых вопросов, связанных со страхованием.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contact">
+        <div class="container">
+            <h2>Контакты</h2>
+            <p>Телефон: +7 (123) 456-78-90</p>
+            <p>Email: info@albatros-insurance.ru</p>
+            <p>Адрес: г. Москва, ул. Примерная, д. 1</p>
+        </div>
+    </footer>
+
+    <script src="authorisation.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script>
+        // Show admin panel link if user is admin
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            const adminLink = document.getElementById('admin-link');
+            const authButton = document.getElementById('auth-button');
+            if (currentUser && currentUser.isAdmin && adminLink) {
+                adminLink.style.display = 'block';
+            }
+            if (currentUser && authButton) {
+                // Fetch user info from database to get Surname and Name
+                const firebaseConfig = {
+                    apiKey: "AIzaSyBrs6S82ksKPiPxlF4T1hyartpIS3A9UNc",
+                    authDomain: "web-swimeasy.firebaseapp.com",
+                    databaseURL: "https://web-albatros-strah-default-rtdb.firebaseio.com",
+                    projectId: "web-swimeasy",
+                    storageBucket: "web-swimeasy.firebasestorage.app",
+                    messagingSenderId: "952061702288",
+                    appId: "1:952061702288:web:1dec35903e94b4a4a7e815",
+                    measurementId: "G-8DXRCL2S8B"
+                };
+                if (!firebase.apps.length) {
+                    firebase.initializeApp(firebaseConfig);
+                }
+                const database = firebase.database();
+                const userRef = database.ref(`Clients/ID/${currentUser.clientId}`);
+                userRef.once('value').then(snapshot => {
+                    const userData = snapshot.val();
+                    if (userData && userData.information) {
+                        const surname = userData.information.Surname || '';
+                        const name = userData.information.Name || '';
+                        const displayName = surname + ' ' + (name ? name.charAt(0) + '.' : '');
+                        authButton.textContent = displayName;
+                        authButton.onclick = () => window.location.href = 'albatros-user.html';
+                    }
+                }).catch(error => {
+                    console.error('Ошибка загрузки данных пользователя:', error);
+                });
+            } else if (authButton) {
+                authButton.onclick = () => window.location.href = 'albatros-reg.html';
+            }
+        });
+
+        // Загрузка тарифов из Firebase и отображение на странице
+        async function loadTariffs() {
+            const firebaseConfig = {
+                apiKey: "AIzaSyBrs6S82ksKPiPxlF4T1hyartpIS3A9UNc",
+                authDomain: "web-swimeasy.firebaseapp.com",
+                databaseURL: "https://web-albatros-strah-default-rtdb.firebaseio.com",
+                projectId: "web-swimeasy",
+                storageBucket: "web-swimeasy.firebasestorage.app",
+                messagingSenderId: "952061702288",
+                appId: "1:952061702288:web:1dec35903e94b4a4a7e815",
+                measurementId: "G-8DXRCL2S8B"
+            };
+
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            }
+            const database = firebase.database();
+
+            const tariffsContainer = document.getElementById('tariff-cards');
+            try {
+                const snapshot = await database.ref('Tariphs/ID').once('value');
+                if (snapshot.exists()) {
+                    const tariffs = snapshot.val();
+                    tariffsContainer.innerHTML = '';
+                    for (const key in tariffs) {
+                        if (tariffs.hasOwnProperty(key)) {
+                            const tariff = tariffs[key];
+                            const card = document.createElement('div');
+                            card.className = 'card';
+                            card.innerHTML = `
+                                <h3>${tariff.sname || tariff.name}</h3>
+                                <p>Цена: ${tariff.price} руб/год</p>
+                                <p>${tariff.description || ''}</p>
+                            `;
+                            tariffsContainer.appendChild(card);
+                        }
+                    }
+                } else {
+                    tariffsContainer.innerHTML = '<p>Тарифы не найдены.</p>';
+                }
+            } catch (error) {
+                tariffsContainer.innerHTML = '<p>Ошибка загрузки тарифов.</p>';
+                console.error(error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadTariffs);
+    </script>
+</body>
+</html>

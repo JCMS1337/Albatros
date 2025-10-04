@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Профиль пользователя - Альбатрос</title>
+    <link rel="stylesheet" href="albatros-main.css" />
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="albatros-main.html"><img src="images/logo.png" alt="Логотип Альбатрос" class="logo" /></a>
+            <nav>
+                <ul>
+                    <li><a href="albatros-main.html">Главная</a></li>
+                    <li><a href="albatros-user.html">Профиль</a></li>
+                    <li><a href="adminpanel.html" id="admin-link" style="display:none;">Админпанель</a></li>
+                    <li><button id="logout-btn">Выйти</button></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="profile-section">
+            <div class="container">
+                <h2>Профиль пользователя</h2>
+                <div id="profile-info">
+                    <!-- Информация о пользователе будет загружена сюда -->
+                </div>
+                <div id="tariff-info">
+                    <!-- Информация о тарифе -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBrs6S82ksKPiPxlF4T1hyartpIS3A9UNc",
+            authDomain: "web-swimeasy.firebaseapp.com",
+            databaseURL: "https://web-albatros-strah-default-rtdb.firebaseio.com",
+            projectId: "web-swimeasy",
+            storageBucket: "web-swimeasy.firebasestorage.app",
+            messagingSenderId: "952061702288",
+            appId: "1:952061702288:web:1dec35903e94b4a4a7e815",
+            measurementId: "G-8DXRCL2S8B"
+        };
+
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const database = firebase.database();
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser || !currentUser.clientId) {
+                window.location.href = 'albatros-reg.html';
+                return;
+            }
+
+            // Show admin link if admin
+            if (currentUser.isAdmin) {
+                document.getElementById('admin-link').style.display = 'inline';
+            }
+
+            const userId = currentUser.clientId;
+            const userRef = database.ref(`Clients/ID/${userId}`);
+            try {
+                const snapshot = await userRef.once('value');
+                if (!snapshot.exists()) {
+                    document.getElementById('profile-info').innerText = 'Пользователь не найден.';
+                    return;
+                }
+                const userData = snapshot.val();
+                const info = userData.information || {};
+                const name = info.Name || '';
+                const surname = info.Surname || '';
+                const datebirth = info.datebirth || '';
+                const tariffId = info.tariph || null;
+
+                document.getElementById('profile-info').innerHTML = `
+                    <p><strong>Фамилия:</strong> ${surname}</p>
+                    <p><strong>Имя:</strong> ${name}</p>
+                    <p><strong>Дата рождения:</strong> ${datebirth}</p>
+                    <p><strong>Email:</strong> ${userData.email || ''}</p>
+                `;
+
+                const tariffInfoDiv = document.getElementById('tariff-info');
+                if (!tariffId) {
+                    tariffInfoDiv.innerHTML = '<p>У вас нет активного тарифа. <a href="albatros-main.html#tariffs">Купить тариф</a></p>';
+                } else {
+                    const tariffRef = database.ref(`Tariphs/ID/${tariffId}`);
+                    const tariffSnap = await tariffRef.once('value');
+                    if (tariffSnap.exists()) {
+                        const tariff = tariffSnap.val();
+                        tariffInfoDiv.innerHTML = `
+                            <h3>Ваш тариф</h3>
+                            <p><strong>Название:</strong> ${tariff.sname || tariff.name}</p>
+                            <p><strong>Описание:</strong> ${tariff.description || ''}</p>
+                            <p><strong>Цена:</strong> ${tariff.price} руб/год</p>
+                        `;
+                    } else {
+                        tariffInfoDiv.innerHTML = '<p>Тариф не найден. <a href="albatros-main.html#tariffs">Купить тариф</a></p>';
+                    }
+                }
+            } catch (error) {
+                document.getElementById('profile-info').innerText = 'Ошибка загрузки данных пользователя.';
+                console.error(error);
+            }
+        });
+
+        // Logout button
+        document.getElementById('logout-btn').addEventListener('click', () => {
+            localStorage.removeItem('currentUser');
+            window.location.href = 'albatros-reg.html';
+        });
+    </script>
+</body>
+</html>

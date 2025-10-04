@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Админ Панель - EasySwim</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="adminpanel.css" />
+    <script type="module" src="adminpanel.js"></script>
+</head>
+<body>
+    <header>
+        <div class="admin-nick" style="position: fixed; top: 10px; right: 10px; z-index: 1000;">
+            <a href="adminpanel.html" style="text-decoration: none; font-weight: bold; color: #000;">ADMIN</a>
+        </div>
+    </header>
+
+    <main id="main-content" style="padding: 20px; box-sizing: border-box;">
+        <h2>Редактирование тарифов клубных карт</h2>
+        <div id="cards-list"></div>
+        <div class="tariff-controls">
+            <button id="add-tariff-btn">Добавить тариф</button>
+            <button id="save-tariffs-btn">Сохранить изменения</button>
+            <button id="cancel-changes-btn">Отмена</button>
+        </div>
+    </main>
+
+    <footer style="text-align: center; padding: 10px 0; background: #007BFF; color: #fff; position: relative; bottom: 0; width: 100%;">
+        &copy; 2024 EasySwim
+    </footer>
+</body>
+</html>

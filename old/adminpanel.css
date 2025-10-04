@@ -1,0 +1,134 @@
+/* adminpanel.css - стили для админпанели */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background: #007BFF;
+    color: #fff;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+    min-height: 80vh;
+}
+
+.left-panel {
+    width: 200px;
+    background-color: #2c3e50;
+    color: white;
+    padding-top: 20px;
+    box-sizing: border-box;
+}
+
+.left-panel ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.left-panel ul li {
+    padding: 15px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    border-left: 5px solid transparent;
+    transition: background-color 0.3s, border-left-color 0.3s;
+    margin-bottom: 8px;
+    display: block;
+    border-radius: 4px;
+}
+
+.left-panel ul li:hover,
+.left-panel ul li.active {
+    background-color: #34495e;
+    border-left-color: #e67e22;
+}
+
+.admin-nick {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.admin-nick a {
+    color: #e67e22;
+    text-decoration: none;
+}
+
+.admin-nick a:hover {
+    text-decoration: underline;
+}
+
+main {
+    flex-grow: 1;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.content-section h2 {
+    margin-top: 0;
+}
+
+#cards-list table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+}
+
+#cards-list th, #cards-list td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+
+#cards-list th {
+    background-color: #007BFF;
+    color: white;
+}
+
+#cards-list td input[type="text"],
+#cards-list td input[type="number"] {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.tariff-controls {
+    margin-top: 10px;
+}
+
+.tariff-controls button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin-right: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.tariff-controls button:hover {
+    background-color: #0056b3;
+}
+
+footer {
+    text-align: center;
+    padding: 10px 0;
+    background: #007BFF;
+    color: #fff;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}

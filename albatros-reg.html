@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Регистрация и Авторизация - Альбатрос</title>
+    <link rel="stylesheet" href="albatros-reg.css" />
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="albatros-main.html"><img src="images/logo.png" alt="Логотип Альбатрос" class="logo" /></a>
+            <div id="admin-link" style="display:none;"><a href="adminpanel.html">Админпанель</a></div>
+        </div>
+    </header>
+
+    <div class="container">
+        <button id="toggle-btn" class="toggle-btn">Войти</button>
+        <h1 id="form-title">Регистрация</h1>
+
+        <form id="register-form" class="active-form">
+            <input type="text" id="reg-name" placeholder="Имя" required />
+            <input type="text" id="reg-surname" placeholder="Фамилия" required />
+            <input type="email" id="reg-email" placeholder="Email" required />
+            <input type="password" id="reg-password" placeholder="Пароль" required />
+            <button type="submit">Зарегистрироваться</button>
+        </form>
+
+        <form id="login-form" class="hidden-form">
+            <input type="email" id="login-email" placeholder="Email" required />
+            <input type="password" id="login-password" placeholder="Пароль" required />
+            <button type="submit">Войти</button>
+        </form>
+
+        <div id="message"></div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <h2>Контакты</h2>
+            <p>Телефон: +7 (123) 456-78-90</p>
+            <p>Email: info@albatros-insurance.ru</p>
+            <p>Адрес: г. Москва, ул. Примерная, д. 1</p>
+        </div>
+    </footer>
+
+    <script type="module" src="authorisation.js"></script>
+</body>
+</html>
