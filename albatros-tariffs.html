@@ -4,24 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Тарифы - Страховая Компания Альбатрос</title>
-    <link rel="stylesheet" href="albatros-main.css" />
+    <link rel="stylesheet" href="albatros-reg.css" />
 </head>
 <body>
     <header>
-        <div class="container header-container">
-            <div class="left-part">
-                <a href="albatros-main.html"><img src="images/logo.png" alt="Логотип Альбатрос" class="logo" /></a>
-                <nav>
-                    <ul>
-                        <li><a href="albatros-about.html">О Компании</a></li>
-                        <li><a href="albatros-tariffs.html">Тарифы</a></li>
-                    </ul>
-                </nav>
-            </div>
-            <div class="right-part">
-                <button id="auth-button" class="auth-button">Вход / Регистрация</button>
-                <div id="admin-link" style="display:none;"><a href="adminpanel.html">Админпанель</a></div>
-            </div>
+        <div class="header-container">
+            <a href="albatros-main.html"><img src="images/logo.png" alt="Логотип Альбатрос" class="logo" /></a>
+            <nav>
+                <ul>
+                    <li><a href="albatros-about.html">О Компании</a></li>
+                    <li><a href="albatros-tariffs.html">Тарифы</a></li>
+                </ul>
+            </nav>
+
+            <button id="auth-button" class="auth-button">Вход / Регистрация</button>
+            <div id="admin-link" style="display:none;"><a href="adminpanel.html">Админпанель</a></div>
         </div>
     </header>
 
@@ -35,6 +32,15 @@
             </div>
         </section>
     </main>
+
+    <footer>
+        <div class="header-container">
+            <h2>Свяжитесь с нами</h2>
+            <p>Телефон: +7 (123) 456-78-90</p>
+            <p>Email: info@albatros-insurance.ru</p>
+            <p>Адрес: г. Москва, ул. Примерная, д. 1</p>
+        </div>
+    </footer>
 
     <script src="authorisation.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
@@ -112,7 +118,7 @@
                             const card = document.createElement('div');
                             card.className = 'card';
                             card.innerHTML = `
-                                <h3>${tariff.sname || tariff.name}</h3>
+                                <h3>${tariff.displayName || tariff.name}</h3>
                                 <p>Цена: ${tariff.price} руб/год</p>
                                 <p>${tariff.description || ''}</p>
                             `;

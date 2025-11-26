@@ -1,0 +1,208 @@
+/* Kali Linux inspired dark theme for admin panel */
+
+:root {
+    --kali-black: #0d0d0d;
+    --kali-dark-gray: #1a1a1a;
+    --kali-green: #00ff00;
+    --kali-red: #ff0000;
+    --kali-blue: #00ffff;
+    --kali-yellow: #ffff00;
+    --kali-white: #ffffff;
+    --kali-gray: #808080;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Courier New', monospace;
+    background-color: var(--kali-black);
+    color: var(--kali-green);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+header {
+    background-color: var(--kali-dark-gray);
+    border-bottom: 2px solid var(--kali-green);
+    padding: 10px 0;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.logo {
+    height: 50px;
+    filter: invert(1) brightness(1.5); /* Make logo white/greenish */
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+nav a, nav button {
+    color: var(--kali-green);
+    text-decoration: none;
+    background: none;
+    border: 1px solid var(--kali-green);
+    padding: 5px 10px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.3s;
+}
+
+nav a:hover, nav button:hover {
+    background-color: var(--kali-green);
+    color: var(--kali-black);
+}
+
+h1 {
+    color: var(--kali-green);
+    font-size: 24px;
+    text-shadow: 0 0 10px var(--kali-green);
+}
+
+main {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: var(--kali-dark-gray);
+    border: 1px solid var(--kali-green);
+    border-radius: 5px;
+}
+
+h2 {
+    color: var(--kali-yellow);
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--kali-green);
+    padding-bottom: 10px;
+}
+
+.tariff-controls {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+button {
+    background-color: var(--kali-black);
+    color: var(--kali-green);
+    border: 1px solid var(--kali-green);
+    padding: 10px 15px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.3s;
+}
+
+button:hover {
+    background-color: var(--kali-green);
+    color: var(--kali-black);
+}
+
+#logout-btn {
+    background-color: var(--kali-red);
+    color: var(--kali-white);
+    border: 1px solid var(--kali-red);
+}
+
+#logout-btn:hover {
+    background-color: var(--kali-white);
+    color: var(--kali-red);
+}
+
+footer {
+    background-color: var(--kali-dark-gray);
+    border-top: 2px solid var(--kali-green);
+    padding: 20px 0;
+    margin-top: 40px;
+}
+
+footer .header-container {
+    flex-direction: column;
+    text-align: center;
+}
+
+footer h2 {
+    color: var(--kali-yellow);
+    margin-bottom: 10px;
+}
+
+footer p {
+    color: var(--kali-gray);
+    margin: 5px 0;
+}
+
+/* Additional Kali-like styling */
+.card {
+    background-color: var(--kali-black);
+    border: 1px solid var(--kali-green);
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 3px;
+}
+
+.card h3 {
+    color: var(--kali-blue);
+    margin-bottom: 10px;
+}
+
+.card p {
+    color: var(--kali-green);
+}
+
+/* Form elements */
+input, textarea, select {
+    background-color: var(--kali-black);
+    color: var(--kali-green);
+    border: 1px solid var(--kali-green);
+    padding: 8px;
+    font-family: inherit;
+    width: 100%;
+    margin: 5px 0;
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: var(--kali-yellow);
+    box-shadow: 0 0 5px var(--kali-yellow);
+}
+
+/* Links */
+a {
+    color: var(--kali-blue);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: var(--kali-yellow);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    nav ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .tariff-controls {
+        flex-direction: column;
+    }
+}

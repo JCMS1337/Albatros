@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const tr = document.createElement('tr');
             tr.dataset.index = index;
             tr.innerHTML = `
-                <td><input type="text" value="${tariff.name}" disabled /></td>
+                <td><input type="text" value="${tariff.name}" /></td>
                 <td><input type="text" value="${tariff.displayName || ''}" /></td>
                 <td><input type="text" value="${tariff.description}" /></td>
                 <td><input type="number" value="${tariff.price}" /></td>
@@ -129,8 +129,8 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const newTariffRef = push(tariffsRef);
             const newId = newTariffRef.key;
-            await set(newTariffRef, { Name: 'Новый тариф', Description: 'Описание', Price: 0 });
-            tariffs.push({ ID_Tariph: newId, name: 'Новый тариф', description: 'Описание', price: 0 });
+            await set(newTariffRef, { name: 'Новый тариф', displayName: '', description: 'Описание', price: 0 });
+            tariffs.push({ ID_Tariph: newId, name: 'Новый тариф', displayName: '', description: 'Описание', price: 0 });
             renderTariffs();
         } catch (error) {
             console.error('Ошибка добавления тарифа:', error);

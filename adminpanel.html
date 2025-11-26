@@ -4,16 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Админ Панель - Альбатрос Страхование</title>
-    <link rel="stylesheet" href="adminpanel.css" />
+    <link rel="stylesheet" href="adminpanel-kali.css" />
     <script type="module" src="adminpanel.js"></script>
 </head>
 <body>
     <header>
-        <div class="container header-container">
+        <div class="header-container">
             <a href="albatros-main.html"><img src="images/logo.png" alt="Логотип Альбатрос" class="logo" /></a>
-        </div>
-        <div class="admin-nick">
-            <a href="albatros-main.html" style="text-decoration: none; font-weight: bold; color: #fff;">Главная</a>
+            <nav>
+                <ul>
+                    <li><a href="albatros-main.html">Главная</a></li>
+                    <li><button id="logout-btn">Выйти</button></li>
+                </ul>
+            </nav>
+
         </div>
     </header>
 
@@ -28,12 +32,20 @@
     </main>
 
     <footer>
-        <div class="container">
-            <h2>Контакты</h2>
+        <div class="header-container">
+            <h2>Свяжитесь с нами</h2>
             <p>Телефон: +7 (123) 456-78-90</p>
             <p>Email: info@albatros-insurance.ru</p>
             <p>Адрес: г. Москва, ул. Примерная, д. 1</p>
         </div>
     </footer>
+
+    <script>
+        // Logout button
+        document.getElementById('logout-btn').addEventListener('click', () => {
+            localStorage.removeItem('currentUser');
+            window.location.href = 'albatros-reg.html';
+        });
+    </script>
 </body>
 </html>

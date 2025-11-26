@@ -4,20 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Профиль пользователя - Альбатрос</title>
-    <link rel="stylesheet" href="albatros-main.css" />
+    <link rel="stylesheet" href="albatros-reg.css" />
 </head>
 <body>
     <header>
-        <div class="container header-container">
+        <div class="header-container">
             <a href="albatros-main.html"><img src="images/logo.png" alt="Логотип Альбатрос" class="logo" /></a>
             <nav>
                 <ul>
                     <li><a href="albatros-main.html">Главная</a></li>
                     <li><a href="albatros-user.html">Профиль</a></li>
-                    <li><a href="adminpanel.html" id="admin-link" style="display:none;">Админпанель</a></li>
                     <li><button id="logout-btn">Выйти</button></li>
                 </ul>
             </nav>
+
+            <div id="admin-link" style="display:none;"><a href="adminpanel.html">Админпанель</a></div>
         </div>
     </header>
 
@@ -34,6 +35,15 @@
             </div>
         </section>
     </main>
+
+    <footer>
+        <div class="header-container">
+            <h2>Свяжитесь с нами</h2>
+            <p>Телефон: +7 (123) 456-78-90</p>
+            <p>Email: info@albatros-insurance.ru</p>
+            <p>Адрес: г. Москва, ул. Примерная, д. 1</p>
+        </div>
+    </footer>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
@@ -98,7 +108,7 @@
                         const tariff = tariffSnap.val();
                         tariffInfoDiv.innerHTML = `
                             <h3>Ваш тариф</h3>
-                            <p><strong>Название:</strong> ${tariff.sname || tariff.name}</p>
+                            <p><strong>Название:</strong> ${tariff.displayName || tariff.name}</p>
                             <p><strong>Описание:</strong> ${tariff.description || ''}</p>
                             <p><strong>Цена:</strong> ${tariff.price} руб/год</p>
                         `;

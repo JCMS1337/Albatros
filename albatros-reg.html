@@ -8,26 +8,27 @@
 </head>
 <body>
     <header>
-        <div class="container header-container">
+        <div class="header-container">
             <a href="albatros-main.html"><img src="images/logo.png" alt="Логотип Альбатрос" class="logo" /></a>
+
             <div id="admin-link" style="display:none;"><a href="adminpanel.html">Админпанель</a></div>
         </div>
     </header>
 
-    <div class="container">
+    <div class="form-container">
         <button id="toggle-btn" class="toggle-btn">Войти</button>
         <h1 id="form-title">Регистрация</h1>
 
         <form id="register-form" class="active-form">
-            <input type="text" id="reg-name" placeholder="Имя" required />
-            <input type="text" id="reg-surname" placeholder="Фамилия" required />
-            <input type="email" id="reg-email" placeholder="Email" required />
-            <input type="password" id="reg-password" placeholder="Пароль" required />
+            <input type="text" id="reg-name" placeholder="Ваше Имя" required />
+            <input type="text" id="reg-surname" placeholder="Ваша Фамилия" required />
+            <input type="email" id="reg-email" placeholder="Email адрес" required />
+            <input type="password" id="reg-password" placeholder="Пароль (минимум 6 символов)" required />
             <button type="submit">Зарегистрироваться</button>
         </form>
 
         <form id="login-form" class="hidden-form">
-            <input type="email" id="login-email" placeholder="Email" required />
+            <input type="email" id="login-email" placeholder="Email адрес" required />
             <input type="password" id="login-password" placeholder="Пароль" required />
             <button type="submit">Войти</button>
         </form>
@@ -36,8 +37,7 @@
     </div>
 
     <footer>
-        <div class="container">
-            <h2>Контакты</h2>
+        <div class="header-container"> <h2>Свяжитесь с нами</h2>
             <p>Телефон: +7 (123) 456-78-90</p>
             <p>Email: info@albatros-insurance.ru</p>
             <p>Адрес: г. Москва, ул. Примерная, д. 1</p>

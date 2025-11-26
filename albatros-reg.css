@@ -1,73 +1,113 @@
+:root {
+    --color-primary: #008000; /* Глубокий зеленый */
+    --color-accent: #ffa500; /* Яркий оранжевый */
+    --color-text: #212121;
+    --color-background: #fcfcfc; /* Почти белый фон */
+    --color-light-gray: #e0e0e0;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: #fff;
-    color: #000;
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif; /* Популярный, современный шрифт */
+    background-color: var(--color-background);
+    color: var(--color-text);
     margin: 0;
     padding: 0;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    line-height: 1.6;
+    font-size: 16px;
 }
 
 /* Шапка */
 header {
-    background-color: #008000; /* Зеленый фон */
-    color: #fff; /* Белый текст */
-    padding: 20px 0;
+    background-color: #fff; /* Белая шапка */
+    color: var(--color-text);
+    padding: 15px 0;
+    border-bottom: 1px solid var(--color-light-gray); /* Тонкая серая линия */
 }
 
 .header-container {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 30px;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 25px;
 }
 
 header h1 {
     margin: 0;
-    font-size: 2em;
+    font-size: 1.5em; /* Меньше акцента на заголовок в шапке */
+    font-weight: 700;
+    color: var(--color-primary);
 }
 
 .logo {
-    width: 60px;
-    height: 60px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     object-fit: cover;
+    box-shadow: 0 0 0 3px var(--color-primary); /* Акцентная обводка */
 }
 
 .container {
-    max-width: 500px;
-    margin: 50px auto 0 auto;
-    padding: 20px;
-    border: 2px solid #008000;
-    background-color: #fff;
-    color: #000;
-    border-radius: 8px;
-    position: relative;
-    flex: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 25px;
 }
 
+.form-container {
+    max-width: 400px; /* Узкая, сфокусированная форма */
+    margin: 80px auto 60px auto;
+    padding: 40px;
+    border: none;
+    background-color: #fff;
+    color: var(--color-text);
+    border-radius: 16px; /* Большее скругление */
+    position: relative;
+    flex: 1;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Мягкая, плавающая тень */
+}
+
+/* Исправленная позиция для .toggle-btn */
 .toggle-btn {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: #008000;
+    top: 20px; /* Отступ сверху от контейнера */
+    right: 20px; /* Отступ справа от контейнера */
+    /* Убираем transform: translate, чтобы кнопка оставалась внутри границ */
+    background-color: var(--color-primary);
     border: none;
-    border-radius: 4px;
+    border-radius: 8px; /* Чуть более скругленный прямоугольник или квадрат */
     color: #fff;
-    font-weight: bold;
-    padding: 8px 12px;
+    font-weight: 600;
+    padding: 8px 15px; /* Увеличиваем паддинги для лучшего текста */
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    font-size: 0.9em; /* Чуть больший шрифт */
+    line-height: 1;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 128, 0, 0.4);
+    /* Добавим минимальную ширину/высоту, если хотим сохранить квадратную форму */
+    min-width: 90px; /* Ширина, чтобы вместить текст "Зарегистрироваться" */
+    height: 40px; /* Высота */
 }
 
 .toggle-btn:hover {
-    background-color: #005a00;
+    background-color: #006600;
+    box-shadow: 0 6px 15px rgba(0, 128, 0, 0.5);
 }
 
 h1#form-title {
     text-align: center;
-    margin-bottom: 30px;
-    color: #008000;
+    margin-bottom: 40px;
+    color: var(--color-primary);
+    font-weight: 800;
+    font-size: 2.5em; /* Крупный, акцентный заголовок */
+    letter-spacing: -0.5px;
 }
 
 form {
@@ -86,47 +126,192 @@ form {
 input[type="text"],
 input[type="email"],
 input[type="password"] {
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #008000;
-    border-radius: 4px;
+    padding: 14px 16px;
+    margin-bottom: 18px;
+    border: 1px solid var(--color-light-gray);
+    border-radius: 8px; /* Современные скругления */
+    background-color: #f9f9f9; /* Слегка серый фон поля */
+    color: var(--color-text);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(255, 165, 0, 0.2); /* Мягкое оранжевое свечение */
     background-color: #fff;
-    color: #000;
+    outline: none;
 }
 
 input::placeholder {
-    color: #666;
+    color: #9e9e9e;
+    font-style: italic; /* Добавляем наклон для плейсхолдера */
 }
 
 button {
-    padding: 10px;
-    background-color: #ffa500;
+    padding: 14px;
+    background-color: var(--color-accent); /* Яркая оранжевая кнопка */
     border: none;
-    border-radius: 4px;
-    color: #000;
-    font-weight: bold;
+    border-radius: 8px;
+    color: #fff; /* Белый текст на оранжевом */
+    font-weight: 700;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
+    letter-spacing: 1px;
+    margin-top: 10px;
+    text-transform: uppercase;
 }
 
 button:hover {
-    background-color: #cc8400;
+    background-color: #e59400;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(255, 165, 0, 0.4);
 }
 
 #message {
-    margin-top: 20px;
+    margin-top: 25px;
     text-align: center;
-    font-weight: bold;
+    font-weight: 600;
+    color: #e53935; /* Красный для ошибок */
+    font-size: 1.1em;
 }
 
 footer {
-    background-color: #008000;
-    color: #ffa500;
-    padding: 20px 0;
+    background-color: #f0f0f0; /* Светло-серый фон футера */
+    color: var(--color-text);
+    padding: 30px 0;
     text-align: center;
     margin-top: auto;
+    border-top: 1px solid var(--color-light-gray);
+}
+
+footer .container {
+    max-width: 1100px;
+    padding: 0 25px;
+    margin: 0 auto;
+    background-color: transparent;
+    box-shadow: none;
 }
 
 footer h2 {
     margin-top: 0;
+    color: var(--color-primary);
+    font-weight: 700;
+    font-size: 1.4em;
+    margin-bottom: 10px;
+}
+
+footer p {
+    margin: 4px 0;
+    font-size: 0.9em;
+    color: #616161;
+}
+
+/* Стиль для ссылки администратора */
+#admin-link a {
+    color: var(--color-accent);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 5px 10px;
+    border: 1px solid var(--color-accent);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+#admin-link a:hover {
+    color: #fff;
+    background-color: var(--color-accent);
+}
+
+/* Стили для навигации */
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 20px;
+}
+
+nav a {
+    color: var(--color-text);
+    text-decoration: none;
+    font-weight: 600;
+    transition: text-decoration 0.3s ease;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* Стиль для кнопки авторизации */
+.auth-button {
+    background-color: var(--color-accent);
+    color: #fff;
+    border: 1px solid var(--color-accent);
+    padding: 8px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.auth-button:hover {
+    background-color: #e59400;
+    box-shadow: 0 4px 10px rgba(255, 165, 0, 0.4);
+}
+
+/* Стили для основного контента */
+main {
+    padding: 40px 0;
+    flex: 1;
+}
+
+section {
+    margin-bottom: 40px;
+}
+
+h2 {
+    color: var(--color-primary);
+    font-size: 1.8em;
+    margin-bottom: 20px;
+}
+
+/* Стили для карточек тарифов */
+.tariff-cards {
+    display: flex;
+    gap: 20px;
+    justify-content: space-around;
+}
+
+.card {
+    background-color: #f9f9f9;
+    border: 1px solid var(--color-accent);
+    padding: 20px;
+    text-align: center;
+    flex: 1;
+    max-width: 300px;
+    border-radius: 8px;
+}
+
+.card h3 {
+    color: var(--color-text);
+    margin-bottom: 10px;
+}
+
+.card p {
+    margin: 10px 0;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .tariff-cards {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav ul {
+        flex-direction: column;
+        gap: 10px;
+    }
 }
