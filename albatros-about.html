@@ -9,16 +9,22 @@
 <body>
     <header>
         <div class="header-container">
-            <a href="albatros-main.html"><img src="images/logo.png" alt="Логотип Альбатрос" class="logo" /></a>
-            <nav>
-                <ul>
-                    <li><a href="albatros-about.html">О Компании</a></li>
-                    <li><a href="albatros-tariffs.html">Тарифы</a></li>
-                </ul>
-            </nav>
-
-            <button id="auth-button" class="auth-button">Вход / Регистрация</button>
-            <div id="admin-link" style="display:none;"><a href="adminpanel.html">Админпанель</a></div>
+            <div class="logo-nav">
+                <a href="albatros-main.html"><img src="images/logo.png" alt="Логотип Альбатрос" class="logo" /></a>
+                <nav>
+                    <ul>
+                        <li><a href="albatros-main.html">Главная</a></li>
+                        <li><a href="albatros-about.html">О Компании</a></li>
+                        <li><a href="albatros-tariffs.html">Тарифы</a></li>
+                        <li><a href="albatros-construct.html">Конструктор тарифов</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="header-buttons">
+                <button id="admin-btn" class="header-button" style="display:none;">Админпанель</button>
+                
+                <button id="auth-button" class="auth-button header-button">Вход / Регистрация</button>
+            </div>
         </div>
     </header>
 
@@ -57,37 +63,42 @@
     </main>
 
     <script src="authorisation.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <script>
-        // Show admin panel link if user is admin
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyBrs6S82ksKPiPxlF4T1hyartpIS3A9UNc",
+            authDomain: "web-swimeasy.firebaseapp.com",
+            databaseURL: "https://web-albatros-strah-default-rtdb.firebaseio.com",
+            projectId: "web-swimeasy",
+            storageBucket: "web-swimeasy.firebasestorage.app",
+            messagingSenderId: "952061702288",
+            appId: "1:952061702288:web:1dec35903e94b4a4a7e815",
+            measurementId: "G-8DXRCL2S8B"
+        };
+
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const database = firebase.database();
+
+        // Handle header UI based on auth state
         document.addEventListener('DOMContentLoaded', () => {
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
             const adminBtn = document.getElementById('admin-btn');
             const authButton = document.getElementById('auth-button');
-            if (currentUser && currentUser.isAdmin && adminBtn) {
-                adminBtn.style.display = 'inline-block';
-            }
-            // Admin button click handler
-            if (adminBtn) {
-                adminBtn.addEventListener('click', () => {
-                    window.location.href = 'adminpanel.html';
-                });
-            }
-            if (currentUser && authButton) {
-                // Fetch user info from database to get Surname and Name
-                const firebaseConfig = {
-                    apiKey: "AIzaSyBrs6S82ksKPiPxlF4T1hyartpIS3A9UNc",
-                    authDomain: "web-swimeasy.firebaseapp.com",
-                    databaseURL: "https://web-albatros-strah-default-rtdb.firebaseio.com",
-                    projectId: "web-swimeasy",
-                    storageBucket: "web-swimeasy.firebasestorage.app",
-                    messagingSenderId: "952061702288",
-                    appId: "1:952061702288:web:1dec35903e94b4a4a7e815",
-                    measurementId: "G-8DXRCL2S8B"
-                };
-                if (!firebase.apps.length) {
-                    firebase.initializeApp(firebaseConfig);
+
+            if (currentUser) {
+                // User is authenticated
+                if (currentUser.isAdmin && adminBtn) {
+                    adminBtn.style.display = 'inline-block';
+                    adminBtn.addEventListener('click', () => {
+                        window.location.href = 'adminpanel.html';
+                    });
                 }
-                const database = firebase.database();
+
+                // Fetch and display user name
                 const userRef = database.ref(`Clients/ID/${currentUser.clientId}`);
                 userRef.once('value').then(snapshot => {
                     const userData = snapshot.val();
@@ -101,9 +112,6 @@
                 }).catch(error => {
                     console.error('Ошибка загрузки данных пользователя:', error);
                 });
-            } else if (authButton) {
-                authButton.onclick = () => window.location.href = 'albatros-reg.html';
-            }
         });
     </script>
 </body>

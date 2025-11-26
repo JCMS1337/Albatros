@@ -14,15 +14,16 @@
                 <nav>
                     <ul>
                         <li><a href="albatros-main.html">Главная</a></li>
-                        <li><a href="albatros-user.html">Профиль</a></li>
-                        <li><button id="logout-btn">Выйти</button></li>
+                        <li><a href="albatros-about.html">О Компании</a></li>
+                        <li><a href="albatros-tariffs.html">Тарифы</a></li>
+                        <li><a href="albatros-construct.html">Конструктор тарифов</a></li>
                     </ul>
                 </nav>
             </div>
-            <h1>АЛЬБАТРОС</h1>
             <div class="header-buttons">
-                <div id="user-info"></div>
                 <button id="admin-btn" class="header-button" style="display:none;">Админпанель</button>
+                <button id="user-info" class="auth-button header-button"></button>
+                <button id="logout-btn" class="header-button">Выйти</button>
             </div>
         </div>
     </header>
@@ -78,7 +79,11 @@
 
             // Show admin button if admin
             if (currentUser.isAdmin) {
-                document.getElementById('admin-btn').style.display = 'inline-block';
+                const adminBtn = document.getElementById('admin-btn');
+                adminBtn.style.display = 'inline-block';
+                adminBtn.addEventListener('click', () => {
+                    window.location.href = 'adminpanel.html';
+                });
             }
 
             const userId = currentUser.clientId;
@@ -144,10 +149,7 @@
             }
         });
 
-        // Admin button
-        document.getElementById('admin-btn').addEventListener('click', () => {
-            window.location.href = 'adminpanel.html';
-        });
+        // Admin button - remove duplicate listener as it's set in DOMContentLoaded
     </script>
 </body>
 </html>

@@ -9,9 +9,22 @@
 <body>
     <header>
         <div class="header-container">
-            <a href="albatros-main.html"><img src="images/logo.png" alt="Логотип Альбатрос" class="logo" /></a>
-
-            <div id="admin-link" style="display:none;"><a href="adminpanel.html">Админпанель</a></div>
+            <div class="logo-nav">
+                <a href="albatros-main.html"><img src="images/logo.png" alt="Логотип Альбатрос" class="logo" /></a>
+                <nav>
+                    <ul>
+                        <li><a href="albatros-main.html">Главная</a></li>
+                        <li><a href="albatros-about.html">О Компании</a></li>
+                        <li><a href="albatros-tariffs.html">Тарифы</a></li>
+                        <li><a href="albatros-construct.html">Конструктор тарифов</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="header-buttons">
+                <button id="admin-btn" class="header-button" style="display:none;">Админпанель</button>
+                
+                <button id="auth-button" class="auth-button header-button">Вход / Регистрация</button>
+            </div>
         </div>
     </header>
 

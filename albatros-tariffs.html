@@ -13,15 +13,16 @@
                 <a href="albatros-main.html"><img src="images/logo.png" alt="Логотип Альбатрос" class="logo" /></a>
                 <nav>
                     <ul>
+                        <li><a href="albatros-main.html">Главная</a></li>
                         <li><a href="albatros-about.html">О Компании</a></li>
                         <li><a href="albatros-tariffs.html">Тарифы</a></li>
+                        <li><a href="albatros-construct.html">Конструктор тарифов</a></li>
                     </ul>
                 </nav>
             </div>
-            <h1>АЛЬБАТРОС</h1>
             <div class="header-buttons">
-                <button id="auth-button" class="auth-button header-button">Вход / Регистрация</button>
                 <button id="admin-btn" class="header-button" style="display:none;">Админпанель</button>
+                <button id="auth-button" class="auth-button header-button">Вход / Регистрация</button>
             </div>
         </div>
     </header>
@@ -32,6 +33,9 @@
                 <h2>Наши Тарифы</h2>
                 <div class="tariff-cards" id="tariff-cards">
                     <!-- Тарифы из Firebase будут загружены сюда -->
+                </div>
+                <div class="construct-cta" style="margin-top:20px; text-align:center;">
+                    <a href="albatros-construct.html" class="header-button" style="text-decoration:none;">Создайте свой тариф</a>
                 </div>
             </div>
         </section>
@@ -50,36 +54,39 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <script>
-        // Show admin panel link if user is admin
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyBrs6S82ksKPiPxlF4T1hyartpIS3A9UNc",
+            authDomain: "web-swimeasy.firebaseapp.com",
+            databaseURL: "https://web-albatros-strah-default-rtdb.firebaseio.com",
+            projectId: "web-swimeasy",
+            storageBucket: "web-swimeasy.firebasestorage.app",
+            messagingSenderId: "952061702288",
+            appId: "1:952061702288:web:1dec35903e94b4a4a7e815",
+            measurementId: "G-8DXRCL2S8B"
+        };
+
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const database = firebase.database();
+
+        // Handle header UI based on auth state
         document.addEventListener('DOMContentLoaded', () => {
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
             const adminBtn = document.getElementById('admin-btn');
             const authButton = document.getElementById('auth-button');
-            if (currentUser && currentUser.isAdmin && adminBtn) {
-                adminBtn.style.display = 'inline-block';
-            }
-            // Admin button click handler
-            if (adminBtn) {
-                adminBtn.addEventListener('click', () => {
-                    window.location.href = 'adminpanel.html';
-                });
-            }
-            if (currentUser && authButton) {
-                // Fetch user info from database to get Surname and Name
-                const firebaseConfig = {
-                    apiKey: "AIzaSyBrs6S82ksKPiPxlF4T1hyartpIS3A9UNc",
-                    authDomain: "web-swimeasy.firebaseapp.com",
-                    databaseURL: "https://web-albatros-strah-default-rtdb.firebaseio.com",
-                    projectId: "web-swimeasy",
-                    storageBucket: "web-swimeasy.firebasestorage.app",
-                    messagingSenderId: "952061702288",
-                    appId: "1:952061702288:web:1dec35903e94b4a4a7e815",
-                    measurementId: "G-8DXRCL2S8B"
-                };
-                if (!firebase.apps.length) {
-                    firebase.initializeApp(firebaseConfig);
+
+            if (currentUser) {
+                // User is authenticated
+                if (currentUser.isAdmin && adminBtn) {
+                    adminBtn.style.display = 'inline-block';
+                    adminBtn.addEventListener('click', () => {
+                        window.location.href = 'adminpanel.html';
+                    });
                 }
-                const database = firebase.database();
+
+                // Fetch and display user name
                 const userRef = database.ref(`Clients/ID/${currentUser.clientId}`);
                 userRef.once('value').then(snapshot => {
                     const userData = snapshot.val();
@@ -98,39 +105,23 @@
             }
         });
 
-        // Загрузка тарифов из Firebase и отображение на странице
+        // Load tariffs from Firebase
         async function loadTariffs() {
-            const firebaseConfig = {
-                apiKey: "AIzaSyBrs6S82ksKPiPxlF4T1hyartpIS3A9UNc",
-                authDomain: "web-swimeasy.firebaseapp.com",
-                databaseURL: "https://web-albatros-strah-default-rtdb.firebaseio.com",
-                projectId: "web-swimeasy",
-                storageBucket: "web-swimeasy.firebasestorage.app",
-                messagingSenderId: "952061702288",
-                appId: "1:952061702288:web:1dec35903e94b4a4a7e815",
-                measurementId: "G-8DXRCL2S8B"
-            };
-
-            if (!firebase.apps.length) {
-                firebase.initializeApp(firebaseConfig);
-            }
-            const database = firebase.database();
-
             const tariffsContainer = document.getElementById('tariff-cards');
             try {
                 const snapshot = await database.ref('Tariphs/ID').once('value');
                 if (snapshot.exists()) {
-                    const tariffs = snapshot.val();
+                    const tariffsData = snapshot.val();
                     tariffsContainer.innerHTML = '';
-                    for (const key in tariffs) {
-                        if (tariffs.hasOwnProperty(key)) {
-                            const tariff = tariffs[key];
+                    for (const key in tariffsData) {
+                        if (tariffsData.hasOwnProperty(key)) {
+                            const tariff = tariffsData[key];
                             const card = document.createElement('div');
                             card.className = 'card';
                             card.innerHTML = `
                                 <h3>${tariff.displayName || tariff.name}</h3>
-                                <p>Цена: ${tariff.price} руб/год</p>
-                                <p>${tariff.description || ''}</p>
+                                <p>Описание: ${tariff.description || 'Описание отсутствует'}</p>
+                                <p><strong>Цена: ${tariff.price} руб/год</strong></p>
                             `;
                             tariffsContainer.appendChild(card);
                         }

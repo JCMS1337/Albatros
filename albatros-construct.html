@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Конструктор тарифов - Альбатрос</title>
+    <link rel="stylesheet" href="albatros-reg.css" />
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo-nav">
+                <a href="albatros-main.html"><img src="images/logo.png" alt="Логотип Альбатрос" class="logo" /></a>
+                <nav>
+                    <ul>
+                        <li><a href="albatros-main.html">Главная</a></li>
+                        <li><a href="albatros-about.html">О Компании</a></li>
+                        <li><a href="albatros-tariffs.html">Тарифы</a></li>
+                        <li><a href="albatros-construct.html">Конструктор тарифов</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="header-buttons">
+                <button id="admin-btn" class="header-button" style="display:none;">Админпанель</button>
+                <button id="auth-button" class="auth-button header-button">Вход / Регистрация</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="construct">
+            <div class="container">
+                <h2>Конструктор тарифов</h2>
+                <p>Здесь пользователь сможет собрать тариф: выбрать пакет покрытий, указать цену и оставить заявку.</p>
+                <form id="construct-form">
+                    <label>Название тарифа<br><input type="text" id="c-name" required></label><br>
+                    <label>Описание<br><textarea id="c-desc"></textarea></label><br>
+                    <label>Цена (руб/год)<br><input type="number" id="c-price" required></label><br>
+                    <button type="submit" class="header-button">Отправить заявку</button>
+                </form>
+                <div id="construct-message"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="header-container">
+            <h2>Свяжитесь с нами</h2>
+            <p>Телефон: +7 (123) 456-78-90</p>
+            <p>Email: info@albatros-insurance.ru</p>
+            <p>Адрес: г. Москва, ул. Примерная, д. 1</p>
+        </div>
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBrs6S82ksKPiPxlF4T1hyartpIS3A9UNc",
+            authDomain: "web-swimeasy.firebaseapp.com",
+            databaseURL: "https://web-albatros-strah-default-rtdb.firebaseio.com",
+            projectId: "web-swimeasy",
+            storageBucket: "web-swimeasy.firebasestorage.app",
+            messagingSenderId: "952061702288",
+            appId: "1:952061702288:web:1dec35903e94b4a4a7e815",
+            measurementId: "G-8DXRCL2S8B"
+        };
+
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const database = firebase.database();
+
+        document.getElementById('construct-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('c-name').value.trim();
+            const desc = document.getElementById('c-desc').value.trim();
+            const price = Number(document.getElementById('c-price').value) || 0;
+
+            const request = {
+                name,
+                displayName: name,
+                description: desc,
+                price,
+                createdAt: Date.now()
+            };
+
+            try {
+                const newRef = await firebase.database().ref('ConstructRequests').push(request);
+                document.getElementById('construct-message').textContent = 'Заявка отправлена. Спасибо!';
+                document.getElementById('construct-form').reset();
+            } catch (err) {
+                console.error(err);
+                document.getElementById('construct-message').textContent = 'Ошибка отправки заявки.';
+            }
+        });
+    </script>
+</body>
+</html>
