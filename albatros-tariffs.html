@@ -9,16 +9,20 @@
 <body>
     <header>
         <div class="header-container">
-            <a href="albatros-main.html"><img src="images/logo.png" alt="Логотип Альбатрос" class="logo" /></a>
-            <nav>
-                <ul>
-                    <li><a href="albatros-about.html">О Компании</a></li>
-                    <li><a href="albatros-tariffs.html">Тарифы</a></li>
-                </ul>
-            </nav>
-
-            <button id="auth-button" class="auth-button">Вход / Регистрация</button>
-            <div id="admin-link" style="display:none;"><a href="adminpanel.html">Админпанель</a></div>
+            <div class="logo-nav">
+                <a href="albatros-main.html"><img src="images/logo.png" alt="Логотип Альбатрос" class="logo" /></a>
+                <nav>
+                    <ul>
+                        <li><a href="albatros-about.html">О Компании</a></li>
+                        <li><a href="albatros-tariffs.html">Тарифы</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <h1>АЛЬБАТРОС</h1>
+            <div class="header-buttons">
+                <button id="auth-button" class="auth-button header-button">Вход / Регистрация</button>
+                <button id="admin-btn" class="header-button" style="display:none;">Админпанель</button>
+            </div>
         </div>
     </header>
 
@@ -49,10 +53,16 @@
         // Show admin panel link if user is admin
         document.addEventListener('DOMContentLoaded', () => {
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            const adminLink = document.getElementById('admin-link');
+            const adminBtn = document.getElementById('admin-btn');
             const authButton = document.getElementById('auth-button');
-            if (currentUser && currentUser.isAdmin && adminLink) {
-                adminLink.style.display = 'block';
+            if (currentUser && currentUser.isAdmin && adminBtn) {
+                adminBtn.style.display = 'inline-block';
+            }
+            // Admin button click handler
+            if (adminBtn) {
+                adminBtn.addEventListener('click', () => {
+                    window.location.href = 'adminpanel.html';
+                });
             }
             if (currentUser && authButton) {
                 // Fetch user info from database to get Surname and Name

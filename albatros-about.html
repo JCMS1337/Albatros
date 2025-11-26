@@ -61,10 +61,16 @@
         // Show admin panel link if user is admin
         document.addEventListener('DOMContentLoaded', () => {
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            const adminLink = document.getElementById('admin-link');
+            const adminBtn = document.getElementById('admin-btn');
             const authButton = document.getElementById('auth-button');
-            if (currentUser && currentUser.isAdmin && adminLink) {
-                adminLink.style.display = 'block';
+            if (currentUser && currentUser.isAdmin && adminBtn) {
+                adminBtn.style.display = 'inline-block';
+            }
+            // Admin button click handler
+            if (adminBtn) {
+                adminBtn.addEventListener('click', () => {
+                    window.location.href = 'adminpanel.html';
+                });
             }
             if (currentUser && authButton) {
                 // Fetch user info from database to get Surname and Name
