@@ -2,9 +2,172 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Конструктор тарифов - Альбатрос</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes" />
+    <meta name="description" content="Конструктор тарифов Альбатрос - создайте индивидуальный план страхования. Выбирайте нужные покрытия, рассчитывайте стоимость и получите персональное предложение." />
+    <meta name="keywords" content="конструктор тарифов, индивидуальный тариф, собрать страховку, выбрать покрытие, калькулятор страховки, персональное предложение, расчет стоимости" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+    <meta name="language" content="Russian" />
+    <link rel="canonical" href="https://albatros-insurance.ru/constructor" />
+    <meta property="og:title" content="Конструктор Тарифов Альбатрос" />
+    <meta property="og:description" content="Создайте собственный страховой полис с нужными вам покрытиями" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://albatros-insurance.ru/constructor" />
+    <meta name="twitter:card" content="summary" />
+    <title>Конструктор Тарифов | Собрать Страховку - Альбатрос</title>
     <link rel="stylesheet" href="albatros-reg.css" />
+    <style>
+        .insurance-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .insurance-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border: 1px solid var(--color-light-gray);
+            border-radius: 8px;
+            background-color: #fafafa;
+            transition: all 0.3s ease;
+        }
+
+        .insurance-item:hover {
+            background-color: #f0f0f0;
+            border-color: var(--color-accent);
+        }
+
+        .insurance-info {
+            flex: 1;
+        }
+
+        .insurance-name {
+            font-weight: 600;
+            color: var(--color-text);
+            margin-bottom: 5px;
+        }
+
+        .insurance-description {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .insurance-price {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-right: 20px;
+            min-width: 120px;
+            text-align: right;
+        }
+
+        .toggle-switch {
+            width: 50px;
+            height: 28px;
+            background-color: #ccc;
+            border-radius: 14px;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            transition: background-color 0.3s ease;
+        }
+
+        .toggle-switch.active {
+            background-color: var(--color-primary);
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background-color: #fff;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: left 0.3s ease;
+        }
+
+        .toggle-switch.active::after {
+            left: 24px;
+        }
+
+        .summary-section {
+            position: sticky;
+            bottom: 0;
+            background-color: #fff;
+            padding: 20px;
+            border-top: 2px solid var(--color-accent);
+            border-radius: 8px 8px 0 0;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+
+        .summary-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .summary-total {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        .summary-count {
+            font-size: 1em;
+            color: #666;
+        }
+
+        .submit-btn {
+            background-color: var(--color-accent);
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #e59400;
+            box-shadow: 0 4px 10px rgba(255, 165, 0, 0.4);
+        }
+
+        .submit-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 768px) {
+            .insurance-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .insurance-price {
+                margin-right: 0;
+                margin-top: 10px;
+            }
+
+            .summary-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .submit-btn {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -31,17 +194,22 @@
         <section class="construct">
             <div class="container">
                 <h2>Конструктор тарифов</h2>
-                <p>Здесь пользователь сможет собрать тариф: выбрать пакет покрытий, указать цену и оставить заявку.</p>
-                <form id="construct-form">
-                    <label>Название тарифа<br><input type="text" id="c-name" required></label><br>
-                    <label>Описание<br><textarea id="c-desc"></textarea></label><br>
-                    <label>Цена (руб/год)<br><input type="number" id="c-price" required></label><br>
-                    <button type="submit" class="header-button">Отправить заявку</button>
-                </form>
-                <div id="construct-message"></div>
+                <p style="margin-bottom: 30px; font-size: 1.1em; color: #666;">Выберите нужные вам виды страхования и создайте индивидуальный план</p>
+                
+                <div class="insurance-list" id="insurance-list"></div>
             </div>
         </section>
     </main>
+
+    <div class="summary-section">
+        <div class="summary-content">
+            <div>
+                <div class="summary-count">Выбрано страхований: <strong id="selected-count">0</strong></div>
+                <div class="summary-total">Итого: <strong id="total-price">0</strong> ₽</div>
+            </div>
+            <button class="submit-btn" id="submit-plan-btn" disabled>Оформить план</button>
+        </div>
+    </div>
 
     <footer>
         <div class="header-container">
@@ -71,27 +239,140 @@
         }
         const database = firebase.database();
 
-        document.getElementById('construct-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const name = document.getElementById('c-name').value.trim();
-            const desc = document.getElementById('c-desc').value.trim();
-            const price = Number(document.getElementById('c-price').value) || 0;
+        // Данные страхований
+        const insurances = [
+            { id: 1, name: "ОСАГО (Автогражданская ответственность)", price: 7000 },
+            { id: 2, name: "КАСКО (Автомобиль от ущерба/угона)", price: 45000 },
+            { id: 3, name: "Ипотечное страхование (Жизнь + Имущество)", price: 15000 },
+            { id: 4, name: "Страхование квартиры/дома (Имущество)", price: 4500 },
+            { id: 5, name: "Страхование ответственности перед соседями", price: 1500 },
+            { id: 6, name: "ДМС (Добровольное медицинское страхование, базовая)", price: 30000 },
+            { id: 7, name: "Страхование путешественников (ВЗР) (на 7 дней)", price: 1500 },
+            { id: 8, name: "Страхование от несчастных случаев (НС)", price: 3000 },
+            { id: 9, name: "Страхование жизни (Рисковое)", price: 10000 },
+            { id: 10, name: "Страхование животных (Собаки/кошки)", price: 8000 },
+            { id: 11, name: "Страхование от укуса клеша", price: 800 },
+            { id: 12, name: "Страхование багажа (дополнительно)", price: 300 },
+            { id: 13, name: "Страхование ответственности арендатора", price: 2500 },
+            { id: 14, name: "Страхование водного транспорта (Катера/яхты)", price: 0, customPrice: "Индивидуально (от 2% стоимости)" },
+            { id: 15, name: "Накопительное страхование жизни (НСЖ)", price: 50000, customPrice: "От 50 000 ₽/год" }
+        ];
 
-            const request = {
-                name,
-                displayName: name,
-                description: desc,
-                price,
-                createdAt: Date.now()
-            };
+        let selectedInsurances = new Set();
 
+        function renderInsurances() {
+            const list = document.getElementById('insurance-list');
+            list.innerHTML = '';
+
+            insurances.forEach(insurance => {
+                const item = document.createElement('div');
+                item.className = 'insurance-item';
+                item.innerHTML = `
+                    <div class="insurance-info">
+                        <div class="insurance-name">${insurance.name}</div>
+                        <div class="insurance-description">${insurance.customPrice || ''}</div>
+                    </div>
+                    <div class="insurance-price">${insurance.customPrice || insurance.price.toLocaleString('ru-RU')} ${insurance.customPrice ? '' : '₽'}</div>
+                    <button class="toggle-switch" data-id="${insurance.id}"></button>
+                `;
+
+                const button = item.querySelector('.toggle-switch');
+                button.addEventListener('click', () => toggleInsurance(insurance.id, insurance.price, button));
+                
+                list.appendChild(item);
+            });
+        }
+
+        function toggleInsurance(id, price, button) {
+            if (selectedInsurances.has(id)) {
+                selectedInsurances.delete(id);
+                button.classList.remove('active');
+            } else {
+                selectedInsurances.add(id);
+                button.classList.add('active');
+            }
+            updateSummary();
+        }
+
+        function updateSummary() {
+            let total = 0;
+            selectedInsurances.forEach(id => {
+                const insurance = insurances.find(i => i.id === id);
+                if (insurance && insurance.price > 0) {
+                    total += insurance.price;
+                }
+            });
+
+            document.getElementById('selected-count').textContent = selectedInsurances.size;
+            document.getElementById('total-price').textContent = total.toLocaleString('ru-RU');
+
+            const submitBtn = document.getElementById('submit-plan-btn');
+            submitBtn.disabled = selectedInsurances.size === 0;
+        }
+
+        document.getElementById('submit-plan-btn').addEventListener('click', async () => {
+            const selectedPlan = Array.from(selectedInsurances).map(id => {
+                const insurance = insurances.find(i => i.id === id);
+                return { id, name: insurance.name, price: insurance.price };
+            });
+
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            
             try {
-                const newRef = await firebase.database().ref('ConstructRequests').push(request);
-                document.getElementById('construct-message').textContent = 'Заявка отправлена. Спасибо!';
-                document.getElementById('construct-form').reset();
-            } catch (err) {
-                console.error(err);
-                document.getElementById('construct-message').textContent = 'Ошибка отправки заявки.';
+                if (currentUser && currentUser.clientId) {
+                    // Сохраняем план для авторизованного пользователя
+                    await database.ref(`Clients/ID/${currentUser.clientId}/customPlan`).set({
+                        insurances: selectedPlan,
+                        totalPrice: Array.from(selectedInsurances).reduce((sum, id) => {
+                            const ins = insurances.find(i => i.id === id);
+                            return sum + (ins?.price || 0);
+                        }, 0),
+                        createdAt: Date.now()
+                    });
+                    alert('Ваш индивидуальный план был сохранён!');
+                } else {
+                    // Предлагаем авторизоваться
+                    alert('Пожалуйста, авторизуйтесь для сохранения плана.');
+                    window.location.href = 'albatros-reg.html';
+                }
+            } catch (error) {
+                console.error('Ошибка при сохранении плана:', error);
+                alert('Ошибка при сохранении плана.');
+            }
+        });
+
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', () => {
+            renderInsurances();
+
+            // Управление шапкой
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            const adminBtn = document.getElementById('admin-btn');
+            const authButton = document.getElementById('auth-button');
+
+            if (currentUser) {
+                if (currentUser.isAdmin && adminBtn) {
+                    adminBtn.style.display = 'inline-block';
+                    adminBtn.addEventListener('click', () => {
+                        window.location.href = 'adminpanel.html';
+                    });
+                }
+
+                const userRef = database.ref(`Clients/ID/${currentUser.clientId}`);
+                userRef.once('value').then(snapshot => {
+                    const userData = snapshot.val();
+                    if (userData && userData.information) {
+                        const surname = userData.information.Surname || '';
+                        const name = userData.information.Name || '';
+                        const displayName = surname + ' ' + (name ? name.charAt(0) + '.' : '');
+                        authButton.textContent = displayName;
+                        authButton.onclick = () => window.location.href = 'albatros-user.html';
+                    }
+                }).catch(error => {
+                    console.error('Ошибка загрузки данных пользователя:', error);
+                });
+            } else if (authButton) {
+                authButton.onclick = () => window.location.href = 'albatros-reg.html';
             }
         });
     </script>

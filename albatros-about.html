@@ -2,8 +2,18 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>О Компании - Страховая Компания Альбатрос</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes" />
+    <meta name="description" content="О компании Альбатрос - лидер страхового рынка с 2010 года. Наша история, миссия, команда профессионалов и комплексный подход к защите клиентов." />
+    <meta name="keywords" content="о компании, Альбатрос, история, миссия, ценности, страховые услуги, профессионализм, надежность, опыт" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+    <meta name="language" content="Russian" />
+    <link rel="canonical" href="https://albatros-insurance.ru/about" />
+    <meta property="og:title" content="О Компании Альбатрос" />
+    <meta property="og:description" content="Страховая компания Альбатрос - лидер рынка с 15-летним опытом" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://albatros-insurance.ru/about" />
+    <meta name="twitter:card" content="summary" />
+    <title>О Компании Альбатрос | История и Ценности</title>
     <link rel="stylesheet" href="albatros-reg.css" />
 </head>
 <body>
@@ -112,7 +122,19 @@
                 }).catch(error => {
                     console.error('Ошибка загрузки данных пользователя:', error);
                 });
+            } else if (authButton) {
+                authButton.onclick = () => window.location.href = 'albatros-reg.html';
+            }
         });
     </script>
+
+    <footer>
+        <div class="header-container">
+            <h2>Свяжитесь с нами</h2>
+            <p>Телефон: +7 (123) 456-78-90</p>
+            <p>Email: info@albatros-insurance.ru</p>
+            <p>Адрес: г. Москва, ул. Примерная, д. 1</p>
+        </div>
+    </footer>
 </body>
 </html>

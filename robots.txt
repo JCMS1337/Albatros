@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /adminpanel.html
+Disallow: /old/
+
+# Параметры сканирования
+Crawl-delay: 1
+Request-rate: 1/10s
+
+# Sitemap
+Sitemap: https://albatros-insurance.ru/sitemap.xml
